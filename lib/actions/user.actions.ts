@@ -6,6 +6,7 @@ import { ID, Query } from "node-appwrite";
 import { parseStringify } from "../utils";
 import { redirect } from "next/navigation";
 import { cookies } from "next/headers";
+import { avatarPlaceholderUrl } from "@/constants";
 
 //Create account flow
 /**
@@ -64,7 +65,7 @@ export const createAccount = async({fullName, email}: {fullName:string; email:st
             {
                 fullName,
                 email,
-                avatar: 'https://th.bing.com/th/id/OIP.PKlD9uuBX0m4S8cViqXZHAHaHa?w=193&h=193&c=7&r=0&o=7&dpr=1.3&pid=1.7&rm=3',
+                avatar: avatarPlaceholderUrl,
                 accountId
             }
         )
