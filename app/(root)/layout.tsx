@@ -9,16 +9,16 @@ export const dynamic = "force-dynamic";
 
 const Layout = async({children}: {children: React.ReactNode}) => {
     {/* Server Side Rendering - SSR */}
-    const currentuser = await getCurrentUser()
-    if(!currentuser) return redirect('/sign-in')
+    const currentUser = await getCurrentUser()
+    if(!currentUser) return redirect('/sign-in')
 
   return (
     <main className="flex h-screen">
-        <Sidebar {...currentuser}/>
+        <Sidebar {...currentUser}/>
 
         <section className="flex h-full flex-1 flex-col">
-            <MobileNavigation {...currentuser}/>
-            <Header userId={currentuser.$id} accountId={currentuser.accountId}/>
+            <MobileNavigation {...currentUser}/>
+            <Header userId={currentUser.$id} accountId={currentUser.accountId}/>
 
             <div className="main-content">
                 {children}

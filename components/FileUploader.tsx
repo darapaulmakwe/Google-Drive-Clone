@@ -1,37 +1,37 @@
-"use client"
+"use client";
 
-import React, { useCallback, useState } from "react"
+import React, { useCallback, useState } from "react";
 
-import { useDropzone } from "react-dropzone"
-import { Button } from "@/components/ui/button"
-import { cn, convertFileToUrl, getFileType } from "@/lib/utils"
-import Image from "next/image"
-import Thumbnail from "@/components/Thumbnail"
-import { MAX_FILE_SIZE } from "@/constants"
-import { useToast } from "@/hooks/use-toast"
-import { uploadFile } from "@/lib/actions/file.actions"
-import { usePathname } from "next/navigation"
+import { useDropzone } from "react-dropzone";
+import { Button } from "@/components/ui/button";
+import { cn, convertFileToUrl, getFileType } from "@/lib/utils";
+import Image from "next/image";
+import Thumbnail from "@/components/Thumbnail";
+import { MAX_FILE_SIZE } from "@/constants";
+import { useToast } from "@/hooks/use-toast";
+import { uploadFile } from "@/lib/actions/file.actions";
+import { usePathname } from "next/navigation";
 
 interface Props {
-  ownerId: string
-  accountId: string
-  className?: string
+  ownerId: string;
+  accountId: string;
+  className?: string;
 }
 
 const FileUploader = ({ ownerId, accountId, className }: Props) => {
-  const path = usePathname()
-  const { toast } = useToast()
-  const [files, setFiles] = useState<File[]>([])
+  const path = usePathname();
+  const { toast } = useToast();
+  const [files, setFiles] = useState<File[]>([]);
 
   const onDrop = useCallback(
     async (acceptedFiles: File[]) => {
-      setFiles(acceptedFiles)
+      setFiles(acceptedFiles);
 
       const uploadPromises = acceptedFiles.map(async (file) => {
         if (file.size > MAX_FILE_SIZE) {
           setFiles((prevFiles) =>
             prevFiles.filter((f) => f.name !== file.name),
-          )
+          );
 
           return toast({
             description: (
@@ -41,7 +41,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
               </p>
             ),
             className: "error-toast",
-          })
+          });
         }
 
         return uploadFile({ file, ownerId, accountId, path }).then(
@@ -49,26 +49,26 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
             if (uploadedFile) {
               setFiles((prevFiles) =>
                 prevFiles.filter((f) => f.name !== file.name),
-              )
+              );
             }
           },
-        )
-      })
+        );
+      });
 
-      await Promise.all(uploadPromises)
+      await Promise.all(uploadPromises);
     },
     [ownerId, accountId, path],
-  )
+  );
 
-  const { getRootProps, getInputProps } = useDropzone({ onDrop })
+  const { getRootProps, getInputProps } = useDropzone({ onDrop });
 
   const handleRemoveFile = (
     e: React.MouseEvent<HTMLImageElement, MouseEvent>,
     fileName: string,
   ) => {
-    e.stopPropagation()
-    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName))
-  }
+    e.stopPropagation();
+    setFiles((prevFiles) => prevFiles.filter((file) => file.name !== fileName));
+  };
 
   return (
     <div {...getRootProps()} className="cursor-pointer">
@@ -87,7 +87,7 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
           <h4 className="h4 text-light-100">Uploading</h4>
 
           {files.map((file, index) => {
-            const { type, extension } = getFileType(file.name)
+            const { type, extension } = getFileType(file.name);
 
             return (
               <li
@@ -120,12 +120,12 @@ const FileUploader = ({ ownerId, accountId, className }: Props) => {
                   onClick={(e) => handleRemoveFile(e, file.name)}
                 />
               </li>
-            )
+            );
           })}
         </ul>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default FileUploader
+export default FileUploader;

@@ -70,7 +70,31 @@ declare interface ThumbnailProps {
 }
 
 declare interface ShareInputProps {
-  file: Models.Document;
+  file: FileDocument;
   onInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (email: string) => void;
+}
+
+declare interface FileDocument extends Models.Document {
+  $id: string;
+  $createdAt: string;
+  $updatedAt: string;
+   $collectionId?: string;
+  $databaseId?: string;
+  $permissions?: string[];
+
+  //custom fields
+  name: string;
+  size: number;
+  type: string;
+  extension: string;
+  url: string;
+  bucketFileId: string;
+  email?: string;
+  owner: {
+    $id: string;
+    fullName: string;
+    email?: string;
+  };
+  users?: string[];
 }
