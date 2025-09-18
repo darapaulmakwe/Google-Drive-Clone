@@ -5,6 +5,8 @@ import { getCurrentUser } from '@/lib/actions/user.actions'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
+export const dynamic = "force-dynamic";
+
 const Layout = async({children}: {children: React.ReactNode}) => {
     {/* Server Side Rendering - SSR */}
     const currentuser = await getCurrentUser()
@@ -16,7 +18,7 @@ const Layout = async({children}: {children: React.ReactNode}) => {
 
         <section className="flex h-full flex-1 flex-col">
             <MobileNavigation {...currentuser}/>
-            <Header/>
+            <Header userId={currentuser.$id} accountId={currentuser.accountId}/>
 
             <div className="main-content">
                 {children}
