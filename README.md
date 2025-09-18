@@ -91,8 +91,5 @@ npm run dev
 # or
 yarn dev
 ```
-View the App: Once the server starts, you can view your store-it app in your browser, typically at http://localhost:3000.
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-rg/docs/app/building-your-application/deploying) for more details.
